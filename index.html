@@ -595,6 +595,12 @@
     </div>
     <div class="modal-body">
       <input type="hidden" id="editRowNum">
+      <div class="form-field">
+        <label class="form-label">Lender / Organisation</label>
+        <select class="form-select" id="editBank">
+          <option value="">Select Lender</option>
+        </select>
+      </div>
       <div class="form-row">
         <div class="form-field">
           <label class="form-label">Level</label>
@@ -614,30 +620,32 @@
         </div>
       </div>
       <div class="form-field">
-  <label class="form-label">Lender / Organisation</label>
-  <select class="form-select" id="editBank">
-    <option value="">Select Lender</option>
-  </select>
-</div>
-<div class="form-field">
-  <label class="form-label">Full Name</label>
-  <input type="text" class="form-input" id="editName" placeholder="RM full name">
-</div>
-
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-input" id="editName" placeholder="RM full name">
+      </div>
       <div class="form-field">
         <label class="form-label">Mobile Number</label>
         <input type="tel" class="form-input" id="editMobile" placeholder="10-digit mobile">
       </div>
       <div class="form-field">
-        <label class="form-label">Email ID</label>
+        <label class="form-label">Email ID (optional)</label>
         <input type="email" class="form-input" id="editEmail" placeholder="work email">
       </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">City</label>
+          <input type="text" class="form-input" id="editCity" placeholder="City">
+        </div>
+        <div class="form-field">
+          <label class="form-label">State</label>
+          <input type="text" class="form-input" id="editState" placeholder="State">
+        </div>
+      </div>
       <div class="form-field">
-        <label class="form-label">Notes</label>
+        <label class="form-label">Notes (optional)</label>
         <input type="text" class="form-input" id="editNotes" placeholder="e.g. Very responsive, salaried only">
       </div>
-      <button class="btn-save" onclick="saveEdit()" id="saveEditBtn" style="opacity:1;pointer-events:all;">💾 Save Changes</button>
-
+      <button class="btn-save" onclick="saveEdit()" style="opacity:1;pointer-events:all;">💾 Save Changes</button>
       <button class="btn-delete" onclick="deleteContact()">🗑 Delete Contact</button>
     </div>
   </div>
@@ -766,17 +774,6 @@ async function loadBanks() {
     }
   } catch(e) { console.error('Banks load failed', e); }
 }
-function populateEditBankDropdown(currentBank) {
-  const sel = document.getElementById('editBank');
-  sel.innerHTML = '<option value="">Select Lender</option>';
-  allBanks.forEach(b => {
-    const opt = document.createElement('option');
-    opt.value = b;
-    opt.textContent = b;
-    if (b === currentBank) opt.selected = true;
-    sel.appendChild(opt);
-  });
-}
 
 // ─── CITY AUTOCOMPLETE ───────────────────────────────────
 function onCityInput() {
@@ -862,12 +859,13 @@ function renderResults(results, city, isNearest, nearestCity) {
     return;
   }
 
-  // Group by bank_nbfc_name + product + login_code
+  // Group by bank_nbfc_name + login_code only (product shown per contact)
   const grouped = {};
   results.forEach(r => {
-    const key = `${r.bank_nbfc_name}|||${r.product}|||${r.login_code}`;
-    if (!grouped[key]) grouped[key] = { bank: r.bank_nbfc_name, product: r.product, login: r.login_code, rows: [] };
-    grouped[key].rows.push(r);
+    const prod = (r.product || r['product'] || '').toString().trim();
+    const key = `${r.bank_nbfc_name}|||${r.login_code}`;
+    if (!grouped[key]) grouped[key] = { bank: r.bank_nbfc_name, login: r.login_code, rows: [] };
+    grouped[key].rows.push({...r, _product: prod});
   });
 
   let html = '';
@@ -883,13 +881,15 @@ function renderResults(results, city, isNearest, nearestCity) {
 
   Object.values(grouped).forEach(group => {
     const initial = (group.bank || '?').charAt(0).toUpperCase();
+    // Collect all unique products for this bank group
+    const groupProducts = [...new Set(group.rows.map(r => r._product).filter(Boolean))];
     html += `<div class="bank-group">
       <div class="bank-header">
         <div class="bank-avatar">${initial}</div>
         <div class="bank-info">
           <div class="bank-name">${group.bank}</div>
           <div class="bank-meta">
-            ${group.product ? `<span class="badge badge-product">${group.product}</span>` : ''}
+            ${groupProducts.map(p => `<span class="badge badge-product">${p}</span>`).join('')}
             ${group.login ? `<span class="badge badge-login">Login: ${group.login}</span>` : ''}
           </div>
         </div>
@@ -921,11 +921,11 @@ function renderResults(results, city, isNearest, nearestCity) {
           ? `<span class="status-badge status-${status}">${status}</span> `
           : '';
 
-        const waMsg = encodeURIComponent(`Hi ${name}, this is ${YOUR_NAME} from ${YOUR_COMPANY}. We handle structured loan cases across multiple cities. I got your reference through RuLoans. Would like to connect for a ${group.product || 'loan'} case discussion.`);
+        const waMsg = encodeURIComponent(`Hi ${name}, this is ${YOUR_NAME} from ${YOUR_COMPANY}. We handle structured loan cases across multiple cities. I got your reference through RuLoans. Would like to connect for a ${row._product || 'loan'} case discussion.`);
 
         html += `<div class="contact-card">
-          <button class="edit-btn" onclick="openEditModal(${JSON.stringify({rowNum, level: level.key, name, mobile, email, status, notes, bank: group.bank}).replace(/"/g,'&quot;')})">✏️</button>
-          <div class="contact-level"><span class="level-dot ${level.dotClass}"></span>${level.label}</div>
+          <button class="edit-btn" onclick="openEditModal(${JSON.stringify({rowNum, level: level.key, name, mobile, email, status, notes, bank: group.bank, city: row.city || '', state: row.state || ''}).replace(/"/g,'&quot;')})">✏️</button>
+          <div class="contact-level"><span class="level-dot ${level.dotClass}"></span>${level.label} ${row._product ? `&nbsp;<span class="badge badge-product" style="font-size:10px;padding:1px 7px;">${row._product}</span>` : ''}</div>
           <div class="contact-name">${statusBadge}${name}</div>
           <div class="contact-mobile">📱 ${mobile}</div>
           <div class="contact-actions">
@@ -944,30 +944,46 @@ function renderResults(results, city, isNearest, nearestCity) {
   section.innerHTML = html;
 }
 
+function populateEditBankDropdown(currentBank) {
+  const sel = document.getElementById('editBank');
+  sel.innerHTML = '<option value="">Select Lender</option>';
+  allBanks.forEach(b => {
+    const opt = document.createElement('option');
+    opt.value = b;
+    opt.textContent = b;
+    if (b === currentBank) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
 // ─── EDIT MODAL ──────────────────────────────────────────
 function openEditModal(contact) {
   editingContact = contact;
   document.getElementById('editModalTitle').textContent = 'Edit Contact';
   document.getElementById('editRowNum').value = contact.rowNum;
+  populateEditBankDropdown(contact.bank || '');
   document.getElementById('editLevel').value = contact.level;
   document.getElementById('editName').value = contact.name || '';
   document.getElementById('editMobile').value = contact.mobile || '';
   document.getElementById('editEmail').value = contact.email || '';
-  populateEditBankDropdown(contact.bank);
   document.getElementById('editStatus').value = contact.status || 'active';
   document.getElementById('editNotes').value = contact.notes || '';
+  document.getElementById('editCity').value = contact.city || '';
+  document.getElementById('editState').value = contact.state || '';
   openModal('editModal');
 }
 
 async function saveEdit() {
   const rowNum = parseInt(document.getElementById('editRowNum').value);
-  const level = document.getElementById('editLevel').value;
   const bank = document.getElementById('editBank').value;
+  const level = document.getElementById('editLevel').value;
   const name = document.getElementById('editName').value.trim();
   const mobile = document.getElementById('editMobile').value.trim();
   const email = document.getElementById('editEmail').value.trim();
   const status = document.getElementById('editStatus').value;
   const notes = document.getElementById('editNotes').value.trim();
+  const city = document.getElementById('editCity').value.trim();
+  const state = document.getElementById('editState').value.trim();
 
   if (!name || !mobile) { showToast('Name and mobile are required'); return; }
 
@@ -978,7 +994,7 @@ async function saveEdit() {
   };
 
   const cols = colMap[level];
- const data = {
+  const data = {
     bank_nbfc_name: bank,
     [cols.name]: name,
     [cols.mobile]: mobile,
