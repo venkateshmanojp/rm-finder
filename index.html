@@ -560,7 +560,19 @@
       <option value="">All Lenders</option>
     </select>
   </div>
-  
+  <div class="field-group">
+    <div class="field-label">Loan Type</div>
+    <select class="search-select" id="productSelect">
+      <option value="">All Products</option>
+      <option value="HL">HL — Home Loan</option>
+      <option value="LAP">LAP — Loan Against Property</option>
+      <option value="HML">HML — Home Micro Loan</option>
+      <option value="PL">PL — Personal Loan</option>
+      <option value="BL">BL — Business Loan</option>
+      <option value="PIL">PIL — Property Improvement Loan</option>
+      <option value="BT+TU">BT+TU — Balance Transfer + Top Up</option>
+    </select>
+  </div>
   <button class="search-btn" onclick="doSearch()">🔍 Search RMs</button>
 </div>
 
@@ -831,12 +843,13 @@ function renderResults(results, city, isNearest, nearestCity) {
     return;
   }
 
-  // Group by bank_nbfc_name + product + login_code
+  // Group by bank_nbfc_name + login_code only (product shown per contact)
   const grouped = {};
   results.forEach(r => {
-    const key = `${r.bank_nbfc_name}|||${r.product}|||${r.login_code}`;
-    if (!grouped[key]) grouped[key] = { bank: r.bank_nbfc_name, product: r.product, login: r.login_code, rows: [] };
-    grouped[key].rows.push(r);
+    const prod = (r.product || r['product'] || '').toString().trim();
+    const key = `${r.bank_nbfc_name}|||${r.login_code}`;
+    if (!grouped[key]) grouped[key] = { bank: r.bank_nbfc_name, login: r.login_code, rows: [] };
+    grouped[key].rows.push({...r, _product: prod});
   });
 
   let html = '';
@@ -852,13 +865,15 @@ function renderResults(results, city, isNearest, nearestCity) {
 
   Object.values(grouped).forEach(group => {
     const initial = (group.bank || '?').charAt(0).toUpperCase();
+    // Collect all unique products for this bank group
+    const groupProducts = [...new Set(group.rows.map(r => r._product).filter(Boolean))];
     html += `<div class="bank-group">
       <div class="bank-header">
         <div class="bank-avatar">${initial}</div>
         <div class="bank-info">
           <div class="bank-name">${group.bank}</div>
           <div class="bank-meta">
-            ${group.product ? `<span class="badge badge-product">${group.product}</span>` : ''}
+            ${groupProducts.map(p => `<span class="badge badge-product">${p}</span>`).join('')}
             ${group.login ? `<span class="badge badge-login">Login: ${group.login}</span>` : ''}
           </div>
         </div>
@@ -890,14 +905,13 @@ function renderResults(results, city, isNearest, nearestCity) {
           ? `<span class="status-badge status-${status}">${status}</span> `
           : '';
 
-        const waMsg = encodeURIComponent(`Hi ${name}, this is ${YOUR_NAME} from ${YOUR_COMPANY}. We handle structured loan cases across multiple cities. I got your reference through RuLoans. Would like to connect for a ${group.product || 'loan'} case discussion.`);
+        const waMsg = encodeURIComponent(`Hi ${name}, this is ${YOUR_NAME} from ${YOUR_COMPANY}. We handle structured loan cases across multiple cities. I got your reference through RuLoans. Would like to connect for a ${row._product || 'loan'} case discussion.`);
 
         html += `<div class="contact-card">
           <button class="edit-btn" onclick="openEditModal(${JSON.stringify({rowNum, level: level.key, name, mobile, email, status, notes, bank: group.bank}).replace(/"/g,'&quot;')})">✏️</button>
-          <div class="contact-level"><span class="level-dot ${level.dotClass}"></span>${level.label} &nbsp;·&nbsp; <span style="color:var(--green-dark);font-weight:700;">${group.product || ''}</span></div>
-<div class="contact-name">${statusBadge}${name}</div>
-<div class="contact-mobile">📱 ${mobile}</div>
-
+          <div class="contact-level"><span class="level-dot ${level.dotClass}"></span>${level.label} ${row._product ? `&nbsp;<span class="badge badge-product" style="font-size:10px;padding:1px 7px;">${row._product}</span>` : ''}</div>
+          <div class="contact-name">${statusBadge}${name}</div>
+          <div class="contact-mobile">📱 ${mobile}</div>
           <div class="contact-actions">
             <a class="action-btn btn-call" href="tel:${mobile}">📞 Call</a>
             <a class="action-btn btn-whatsapp" href="https://wa.me/91${mobile}?text=${waMsg}" target="_blank">💬 WhatsApp</a>
@@ -991,7 +1005,7 @@ function openAddModal() { openModal('addModal'); }
 
 async function saveNewRM() {
   const bank = document.getElementById('addBank').value.trim();
-  const product = ";
+  const product = document.getElementById('addProduct').value;
   const state = document.getElementById('addState').value.trim();
   const city = document.getElementById('addCity').value.trim();
   const loginCode = document.getElementById('addLoginCode').value.trim();
