@@ -560,19 +560,7 @@
       <option value="">All Lenders</option>
     </select>
   </div>
-  <div class="field-group">
-    <div class="field-label">Loan Type</div>
-    <select class="search-select" id="productSelect">
-      <option value="">All Products</option>
-      <option value="HL">HL — Home Loan</option>
-      <option value="LAP">LAP — Loan Against Property</option>
-      <option value="HML">HML — Home Micro Loan</option>
-      <option value="PL">PL — Personal Loan</option>
-      <option value="BL">BL — Business Loan</option>
-      <option value="PIL">PIL — Property Improvement Loan</option>
-      <option value="BT+TU">BT+TU — Balance Transfer + Top Up</option>
-    </select>
-  </div>
+  
   <button class="search-btn" onclick="doSearch()">🔍 Search RMs</button>
 </div>
 
@@ -1003,7 +991,7 @@ function openAddModal() { openModal('addModal'); }
 
 async function saveNewRM() {
   const bank = document.getElementById('addBank').value.trim();
-  const product = document.getElementById('addProduct').value;
+  const product = ";
   const state = document.getElementById('addState').value.trim();
   const city = document.getElementById('addCity').value.trim();
   const loginCode = document.getElementById('addLoginCode').value.trim();
