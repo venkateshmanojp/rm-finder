@@ -614,9 +614,16 @@
         </div>
       </div>
       <div class="form-field">
-        <label class="form-label">Full Name</label>
-        <input type="text" class="form-input" id="editName" placeholder="RM full name">
-      </div>
+  <label class="form-label">Lender / Organisation</label>
+  <select class="form-select" id="editBank">
+    <option value="">Select Lender</option>
+  </select>
+</div>
+<div class="form-field">
+  <label class="form-label">Full Name</label>
+  <input type="text" class="form-input" id="editName" placeholder="RM full name">
+</div>
+
       <div class="form-field">
         <label class="form-label">Mobile Number</label>
         <input type="tel" class="form-input" id="editMobile" placeholder="10-digit mobile">
@@ -757,6 +764,17 @@ async function loadBanks() {
       });
     }
   } catch(e) { console.error('Banks load failed', e); }
+}
+function populateEditBankDropdown(currentBank) {
+  const sel = document.getElementById('editBank');
+  sel.innerHTML = '<option value="">Select Lender</option>';
+  allBanks.forEach(b => {
+    const opt = document.createElement('option');
+    opt.value = b;
+    opt.textContent = b;
+    if (b === currentBank) opt.selected = true;
+    sel.appendChild(opt);
+  });
 }
 
 // ─── CITY AUTOCOMPLETE ───────────────────────────────────
@@ -934,6 +952,7 @@ function openEditModal(contact) {
   document.getElementById('editName').value = contact.name || '';
   document.getElementById('editMobile').value = contact.mobile || '';
   document.getElementById('editEmail').value = contact.email || '';
+  populateEditBankDropdown(contact.bank);
   document.getElementById('editStatus').value = contact.status || 'active';
   document.getElementById('editNotes').value = contact.notes || '';
   openModal('editModal');
@@ -942,6 +961,7 @@ function openEditModal(contact) {
 async function saveEdit() {
   const rowNum = parseInt(document.getElementById('editRowNum').value);
   const level = document.getElementById('editLevel').value;
+  const bank = document.getElementById('editBank').value;
   const name = document.getElementById('editName').value.trim();
   const mobile = document.getElementById('editMobile').value.trim();
   const email = document.getElementById('editEmail').value.trim();
@@ -957,12 +977,15 @@ async function saveEdit() {
   };
 
   const cols = colMap[level];
-  const data = {
+ const data = {
+    bank_nbfc_name: bank,
     [cols.name]: name,
     [cols.mobile]: mobile,
     [cols.email]: email,
     status,
-    notes
+    notes,
+    city,
+    state
   };
 
   try {
