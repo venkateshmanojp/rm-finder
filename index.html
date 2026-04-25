@@ -549,11 +549,19 @@
 
 <!-- SEARCH SECTION -->
 <div class="search-section">
-  <div class="field-group" id="cityFieldGroup">
-    <div class="field-label">City / Town</div>
-    <input type="text" class="search-input" id="cityInput" placeholder="Type city name..." autocomplete="off" oninput="onCityInput()" onblur="hideCityList()">
-    <div class="autocomplete-list" id="cityList" style="display:none"></div>
+  <div class="field-group">
+    <div class="field-label">State</div>
+    <select class="search-select" id="stateSelect" onchange="onStateChange()">
+      <option value="">Select State...</option>
+    </select>
   </div>
+  <div class="field-group" id="cityFieldGroup" style="display:none;">
+    <div class="field-label">City / Town</div>
+    <select class="search-select" id="citySelect">
+      <option value="">Select City...</option>
+    </select>
+  </div>
+
   <div class="field-group">
     <div class="field-label">Lender</div>
     <select class="search-select" id="bankSelect">
@@ -751,13 +759,39 @@ async function init() {
 
 async function loadCities() {
   try {
-    const res = await fetch(`${SHEET_URL}?action=getCities`);
+    const res  = await fetch(`${SHEET_URL}?action=getStates`);
     const json = await res.json();
     if (json.status === 'ok') {
-      allCities = json.data.filter(Boolean).map(c => c.trim());
+      const sel = document.getElementById('stateSelect');
+      json.data.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s; opt.textContent = s;
+        sel.appendChild(opt);
+      });
+    }
+  } catch(e) { console.error('States load failed', e); }
+}
+
+async function onStateChange() {
+  const state = document.getElementById('stateSelect').value;
+  const cityGroup = document.getElementById('cityFieldGroup');
+  const citySelect = document.getElementById('citySelect');
+  citySelect.innerHTML = '<option value="">Select City...</option>';
+  if (!state) { cityGroup.style.display = 'none'; return; }
+  try {
+    const res  = await fetch(`${SHEET_URL}?action=getCitiesByState&state=${encodeURIComponent(state)}`);
+    const json = await res.json();
+    if (json.status === 'ok') {
+      json.data.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c; opt.textContent = c;
+        citySelect.appendChild(opt);
+      });
+      cityGroup.style.display = 'block';
     }
   } catch(e) { console.error('Cities load failed', e); }
 }
+
 
 async function loadBanks() {
   try {
@@ -775,38 +809,10 @@ async function loadBanks() {
   } catch(e) { console.error('Banks load failed', e); }
 }
 
-// ─── CITY AUTOCOMPLETE ───────────────────────────────────
-function onCityInput() {
-  const val = document.getElementById('cityInput').value.trim().toLowerCase();
-  const list = document.getElementById('cityList');
-  if (!val || val.length < 2) { list.style.display = 'none'; return; }
-
-  const matches = allCities
-    .filter(c => c.toLowerCase().includes(val))
-    .slice(0, 8);
-
-  if (!matches.length) { list.style.display = 'none'; return; }
-
-  list.innerHTML = matches.map(c => {
-    const idx = c.toLowerCase().indexOf(val);
-    const highlighted = c.slice(0,idx) + '<span>' + c.slice(idx, idx+val.length) + '</span>' + c.slice(idx+val.length);
-    return `<div class="autocomplete-item" onmousedown="selectCity('${c}')">${highlighted}</div>`;
-  }).join('');
-  list.style.display = 'block';
-}
-
-function selectCity(city) {
-  document.getElementById('cityInput').value = city;
-  document.getElementById('cityList').style.display = 'none';
-}
-
-function hideCityList() {
-  setTimeout(() => document.getElementById('cityList').style.display = 'none', 150);
-}
-
 // ─── SEARCH ──────────────────────────────────────────────
 async function doSearch() {
-  const city = document.getElementById('cityInput').value.trim();
+  const city = document.getElementById('citySelect').value.trim();
+
   const bank = document.getElementById('bankSelect').value;
   const product = document.getElementById('productSelect').value;
 
@@ -1115,10 +1121,6 @@ function showToast(msg) {
   toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// Enter key on city input triggers search
-document.getElementById('cityInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') { hideCityList(); doSearch(); }
-});
 
 // Init on load
 init();
