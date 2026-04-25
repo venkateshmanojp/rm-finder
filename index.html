@@ -27,9 +27,7 @@
     --radius: 16px;
     --radius-sm: 10px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--gray-50);
@@ -38,8 +36,6 @@
     max-width: 480px;
     margin: 0 auto;
   }
-
-  /* HEADER */
   .header {
     background: var(--green-dark);
     color: white;
@@ -71,14 +67,11 @@
     transition: background 0.2s;
   }
   .add-btn:active { background: rgba(255,255,255,0.35); }
-
-  /* SEARCH SECTION */
   .search-section {
     background: var(--white);
     padding: 16px;
     border-bottom: 1px solid var(--gray-200);
   }
-
   .field-label {
     font-size: 11px;
     font-weight: 600;
@@ -87,11 +80,9 @@
     letter-spacing: 0.6px;
     margin-bottom: 6px;
   }
-
   .field-group { margin-bottom: 12px; position: relative; }
   .field-group:last-child { margin-bottom: 0; }
-
-  .search-input, .search-select {
+  .search-select {
     width: 100%;
     padding: 12px 16px;
     border: 1.5px solid var(--gray-200);
@@ -103,43 +94,12 @@
     outline: none;
     transition: border-color 0.2s, background 0.2s;
     appearance: none;
-  }
-  .search-input:focus, .search-select:focus {
-    border-color: var(--green);
-    background: var(--white);
-  }
-  .search-select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 14px center;
     padding-right: 36px;
   }
-
-  /* Autocomplete */
-  .autocomplete-list {
-    position: absolute;
-    top: 100%; left: 0; right: 0;
-    background: white;
-    border: 1.5px solid var(--gray-200);
-    border-top: none;
-    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-    max-height: 200px;
-    overflow-y: auto;
-    z-index: 200;
-    box-shadow: var(--shadow);
-  }
-  .autocomplete-item {
-    padding: 11px 16px;
-    font-size: 14px;
-    cursor: pointer;
-    border-bottom: 1px solid var(--gray-100);
-    transition: background 0.15s;
-  }
-  .autocomplete-item:last-child { border-bottom: none; }
-  .autocomplete-item:active, .autocomplete-item.highlighted { background: var(--green-light); }
-  .autocomplete-item span { color: var(--green-dark); font-weight: 600; }
-
-  /* Search Button */
+  .search-select:focus { border-color: var(--green); background-color: var(--white); }
   .search-btn {
     width: 100%;
     padding: 14px;
@@ -156,10 +116,7 @@
     letter-spacing: -0.2px;
   }
   .search-btn:active { background: var(--green-dark); transform: scale(0.99); }
-
-  /* RESULTS */
   .results-section { padding: 12px 16px; }
-
   .results-header {
     display: flex;
     align-items: center;
@@ -181,8 +138,6 @@
     padding: 3px 10px;
     border-radius: 20px;
   }
-
-  /* Nearest city notice */
   .nearest-notice {
     background: #FFF8E1;
     border: 1px solid #FFE082;
@@ -195,8 +150,6 @@
     gap: 8px;
     align-items: flex-start;
   }
-
-  /* Bank Group */
   .bank-group {
     background: var(--white);
     border-radius: var(--radius);
@@ -224,43 +177,17 @@
     font-family: 'DM Mono', monospace;
   }
   .bank-info { flex: 1; min-width: 0; }
-  .bank-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--gray-900);
-    line-height: 1.3;
-  }
-  .bank-meta {
-    display: flex;
-    gap: 8px;
-    margin-top: 5px;
-    flex-wrap: wrap;
-  }
-  .badge {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 20px;
-    letter-spacing: 0.3px;
-  }
-  .badge-product {
-    background: #E3F2FD;
-    color: #1565C0;
-  }
-  .badge-login {
-    background: #F3E5F5;
-    color: #6A1B9A;
-    font-family: 'DM Mono', monospace;
-  }
-
-  /* Contact Card */
+  .bank-name { font-size: 14px; font-weight: 600; color: var(--gray-900); line-height: 1.3; }
+  .bank-meta { display: flex; gap: 8px; margin-top: 5px; flex-wrap: wrap; }
+  .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; letter-spacing: 0.3px; }
+  .badge-product { background: #E3F2FD; color: #1565C0; }
+  .badge-login { background: #F3E5F5; color: #6A1B9A; font-family: 'DM Mono', monospace; }
   .contact-card {
     padding: 14px 16px;
     border-bottom: 1px solid var(--gray-100);
     position: relative;
   }
   .contact-card:last-child { border-bottom: none; }
-
   .contact-level {
     font-size: 10px;
     font-weight: 700;
@@ -272,261 +199,121 @@
     align-items: center;
     gap: 6px;
   }
-  .level-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--green);
-  }
+  .level-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
   .level-dot.asm { background: var(--blue); }
   .level-dot.zsm { background: #FF9500; }
-
-  .contact-name {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--gray-900);
-    margin-bottom: 2px;
-  }
-  .contact-mobile {
-    font-size: 13px;
-    color: var(--gray-500);
-    font-family: 'DM Mono', monospace;
-    margin-bottom: 10px;
-  }
-
-  .contact-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
+  .contact-name { font-size: 15px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; }
+  .contact-mobile { font-size: 13px; color: var(--gray-500); font-family: 'DM Mono', monospace; margin-bottom: 10px; }
+  .contact-actions { display: flex; gap: 8px; flex-wrap: wrap; }
   .action-btn {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 7px 14px;
-    border-radius: 20px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
+    display: flex; align-items: center; gap: 5px;
+    padding: 7px 14px; border-radius: 20px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+    border: none; cursor: pointer; text-decoration: none;
     transition: opacity 0.2s, transform 0.1s;
   }
   .action-btn:active { opacity: 0.8; transform: scale(0.97); }
-
-  .btn-call {
-    background: #E8F5E9;
-    color: #2E7D32;
-  }
-  .btn-whatsapp {
-    background: var(--green-light);
-    color: var(--green-dark);
-  }
-  .btn-email {
-    background: #E3F2FD;
-    color: #1565C0;
-  }
-
+  .btn-call { background: #E8F5E9; color: #2E7D32; }
+  .btn-whatsapp { background: var(--green-light); color: var(--green-dark); }
+  .btn-email { background: #E3F2FD; color: #1565C0; }
   .edit-btn {
-    position: absolute;
-    top: 14px; right: 14px;
-    background: var(--gray-100);
-    border: none;
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
-    color: var(--gray-500);
-    transition: background 0.2s;
+    position: absolute; top: 14px; right: 14px;
+    background: var(--gray-100); border: none;
+    width: 30px; height: 30px; border-radius: 50%;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--gray-500); transition: background 0.2s;
   }
   .edit-btn:active { background: var(--gray-200); }
-
-  /* No results */
-  .no-results {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--gray-400);
-  }
+  .no-results { text-align: center; padding: 40px 20px; color: var(--gray-400); }
   .no-results-icon { font-size: 48px; margin-bottom: 12px; }
   .no-results h3 { font-size: 16px; color: var(--gray-600); margin-bottom: 6px; }
   .no-results p { font-size: 13px; line-height: 1.5; }
-
-  /* MODAL */
   .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 300;
-    display: flex;
-    align-items: flex-end;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s;
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 300; display: flex; align-items: flex-end;
+    opacity: 0; pointer-events: none; transition: opacity 0.25s;
   }
-  .modal-overlay.active {
-    opacity: 1;
-    pointer-events: all;
-  }
+  .modal-overlay.active { opacity: 1; pointer-events: all; }
   .modal {
-    background: white;
-    width: 100%;
-    border-radius: 24px 24px 0 0;
-    padding: 0 0 32px;
+    background: white; width: 100%;
+    border-radius: 24px 24px 0 0; padding: 0 0 32px;
     transform: translateY(100%);
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    max-height: 90vh;
-    overflow-y: auto;
+    max-height: 90vh; overflow-y: auto;
   }
-  .modal-overlay.active .modal {
-    transform: translateY(0);
-  }
-  .modal-handle {
-    width: 40px; height: 4px;
-    background: var(--gray-200);
-    border-radius: 2px;
-    margin: 12px auto 0;
-  }
+  .modal-overlay.active .modal { transform: translateY(0); }
+  .modal-handle { width: 40px; height: 4px; background: var(--gray-200); border-radius: 2px; margin: 12px auto 0; }
   .modal-header {
-    padding: 16px 20px 14px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--gray-100);
+    padding: 16px 20px 14px; display: flex; align-items: center;
+    justify-content: space-between; border-bottom: 1px solid var(--gray-100);
   }
-  .modal-title {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--gray-900);
-  }
+  .modal-title { font-size: 17px; font-weight: 700; color: var(--gray-900); }
   .modal-close {
-    background: var(--gray-100);
-    border: none;
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    font-size: 18px;
-    cursor: pointer;
+    background: var(--gray-100); border: none;
+    width: 32px; height: 32px; border-radius: 50%;
+    font-size: 18px; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     color: var(--gray-500);
   }
   .modal-body { padding: 20px; }
-
   .form-field { margin-bottom: 16px; }
   .form-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--gray-500);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 6px;
-    display: block;
+    font-size: 12px; font-weight: 600; color: var(--gray-500);
+    text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 6px; display: block;
   }
   .form-input, .form-select {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1.5px solid var(--gray-200);
-    border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    color: var(--gray-900);
-    background: var(--gray-50);
-    outline: none;
-    transition: border-color 0.2s;
-    appearance: none;
+    width: 100%; padding: 12px 14px;
+    border: 1.5px solid var(--gray-200); border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif; font-size: 15px;
+    color: var(--gray-900); background: var(--gray-50);
+    outline: none; transition: border-color 0.2s; appearance: none;
   }
   .form-input:focus, .form-select:focus { border-color: var(--green); background: white; }
-
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
   .btn-save {
-    width: 100%;
-    padding: 14px;
-    background: var(--green);
-    color: white;
-    border: none;
-    border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: background 0.2s;
+    width: 100%; padding: 14px; background: var(--green);
+    color: white; border: none; border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600;
+    cursor: pointer; margin-top: 8px; transition: background 0.2s;
   }
   .btn-save:active { background: var(--green-dark); }
-
   .btn-delete {
-    width: 100%;
-    padding: 13px;
-    background: white;
-    color: var(--red);
-    border: 1.5px solid #FFCDD2;
-    border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background 0.2s;
+    width: 100%; padding: 13px; background: white; color: var(--red);
+    border: 1.5px solid #FFCDD2; border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
+    cursor: pointer; margin-top: 10px; transition: background 0.2s;
   }
   .btn-delete:active { background: #FFF5F5; }
-
-  /* Loading */
   .loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 48px 20px;
-    gap: 14px;
-    color: var(--gray-400);
-    font-size: 14px;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 48px 20px; gap: 14px;
+    color: var(--gray-400); font-size: 14px;
   }
   .spinner {
     width: 32px; height: 32px;
-    border: 3px solid var(--gray-200);
-    border-top-color: var(--green);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+    border: 3px solid var(--gray-200); border-top-color: var(--green);
+    border-radius: 50%; animation: spin 0.8s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* Toast */
   .toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
+    position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(80px);
-    background: var(--gray-900);
-    color: white;
-    padding: 11px 20px;
-    border-radius: 24px;
-    font-size: 14px;
-    font-weight: 500;
-    z-index: 999;
+    background: var(--gray-900); color: white;
+    padding: 11px 20px; border-radius: 24px;
+    font-size: 14px; font-weight: 500; z-index: 999;
     transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
     white-space: nowrap;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
-
-  /* Empty state initial */
-  .empty-state {
-    padding: 48px 24px;
-    text-align: center;
-    color: var(--gray-400);
-  }
+  .empty-state { padding: 48px 24px; text-align: center; color: var(--gray-400); }
   .empty-state-icon { font-size: 52px; margin-bottom: 16px; }
   .empty-state h3 { font-size: 17px; font-weight: 600; color: var(--gray-600); margin-bottom: 8px; }
   .empty-state p { font-size: 14px; line-height: 1.6; }
-
   .status-badge {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: 0.5px;
   }
   .status-active { background: #E8F5E9; color: #2E7D32; }
   .status-inactive { background: #FFF3E0; color: #E65100; }
@@ -549,12 +336,16 @@
 
 <!-- SEARCH SECTION -->
 <div class="search-section">
+
+  <!-- State Dropdown -->
   <div class="field-group">
     <div class="field-label">State</div>
     <select class="search-select" id="stateSelect" onchange="onStateChange()">
       <option value="">Select State...</option>
     </select>
   </div>
+
+  <!-- City Dropdown — hidden until state selected -->
   <div class="field-group" id="cityFieldGroup" style="display:none;">
     <div class="field-label">City / Town</div>
     <select class="search-select" id="citySelect">
@@ -562,12 +353,15 @@
     </select>
   </div>
 
+  <!-- Lender -->
   <div class="field-group">
     <div class="field-label">Lender</div>
     <select class="search-select" id="bankSelect">
       <option value="">All Lenders</option>
     </select>
   </div>
+
+  <!-- Loan Type -->
   <div class="field-group">
     <div class="field-label">Loan Type</div>
     <select class="search-select" id="productSelect">
@@ -581,6 +375,7 @@
       <option value="BT+TU">BT+TU — Balance Transfer + Top Up</option>
     </select>
   </div>
+
   <button class="search-btn" onclick="doSearch()">🔍 Search RMs</button>
 </div>
 
@@ -589,7 +384,7 @@
   <div class="empty-state">
     <div class="empty-state-icon">🔍</div>
     <h3>Find Banking RMs</h3>
-    <p>Search by city, lender and loan type to find contact hierarchy with call and WhatsApp options.</p>
+    <p>Select state and city to find RMs with call and WhatsApp options.</p>
   </div>
 </div>
 
@@ -653,7 +448,7 @@
         <label class="form-label">Notes (optional)</label>
         <input type="text" class="form-input" id="editNotes" placeholder="e.g. Very responsive, salaried only">
       </div>
-      <button class="btn-save" onclick="saveEdit()" style="opacity:1;pointer-events:all;">💾 Save Changes</button>
+      <button class="btn-save" onclick="saveEdit()">💾 Save Changes</button>
       <button class="btn-delete" onclick="deleteContact()">🗑 Delete Contact</button>
     </div>
   </div>
@@ -743,27 +538,27 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbzi0ssemKh0i8CDuvoHDvTIV0mxrEdrN_opsen7Av-THHkDILWVc_jCYqSsjLstwPUzQA/exec";
-const YOUR_NAME = "Manoj";
+const SHEET_URL  = "https://script.google.com/macros/s/AKfycbzi0ssemKh0i8CDuvoHDvTIV0mxrEdrN_opsen7Av-THHkDILWVc_jCYqSsjLstwPUzQA/exec";
+const YOUR_NAME  = "Manoj";
 const YOUR_COMPANY = "VastMyWealth, Mumbai";
 
-let allCities = [];
-let allBanks = [];
-let currentResults = [];
-let editingContact = null;
+let allBanks      = [];
+let currentResults= [];
+let editingContact= null;
 
 // ─── INIT ────────────────────────────────────────────────
 async function init() {
-  await Promise.all([loadCities(), loadBanks()]);
+  await Promise.all([loadStates(), loadBanks()]);
 }
 
-async function loadCities() {
+// Load States into dropdown
+async function loadStates() {
   try {
     const res  = await fetch(`${SHEET_URL}?action=getStates`);
     const json = await res.json();
     if (json.status === 'ok') {
       const sel = document.getElementById('stateSelect');
-      json.data.forEach(s => {
+      json.data.filter(Boolean).forEach(s => {
         const opt = document.createElement('option');
         opt.value = s; opt.textContent = s;
         sel.appendChild(opt);
@@ -772,30 +567,10 @@ async function loadCities() {
   } catch(e) { console.error('States load failed', e); }
 }
 
-async function onStateChange() {
-  const state = document.getElementById('stateSelect').value;
-  const cityGroup = document.getElementById('cityFieldGroup');
-  const citySelect = document.getElementById('citySelect');
-  citySelect.innerHTML = '<option value="">Select City...</option>';
-  if (!state) { cityGroup.style.display = 'none'; return; }
-  try {
-    const res  = await fetch(`${SHEET_URL}?action=getCitiesByState&state=${encodeURIComponent(state)}`);
-    const json = await res.json();
-    if (json.status === 'ok') {
-      json.data.forEach(c => {
-        const opt = document.createElement('option');
-        opt.value = c; opt.textContent = c;
-        citySelect.appendChild(opt);
-      });
-      cityGroup.style.display = 'block';
-    }
-  } catch(e) { console.error('Cities load failed', e); }
-}
-
-
+// Load Banks into dropdown
 async function loadBanks() {
   try {
-    const res = await fetch(`${SHEET_URL}?action=getBanks`);
+    const res  = await fetch(`${SHEET_URL}?action=getBanks`);
     const json = await res.json();
     if (json.status === 'ok') {
       allBanks = json.data.filter(Boolean);
@@ -809,36 +584,61 @@ async function loadBanks() {
   } catch(e) { console.error('Banks load failed', e); }
 }
 
+// When state selected → load cities
+async function onStateChange() {
+  const state     = document.getElementById('stateSelect').value;
+  const cityGroup = document.getElementById('cityFieldGroup');
+  const citySelect= document.getElementById('citySelect');
+
+  // Reset city dropdown
+  citySelect.innerHTML = '<option value="">Select City...</option>';
+
+  if (!state) {
+    cityGroup.style.display = 'none';
+    return;
+  }
+
+  try {
+    const res  = await fetch(`${SHEET_URL}?action=getCitiesByState&state=${encodeURIComponent(state)}`);
+    const json = await res.json();
+    if (json.status === 'ok' && json.data.length) {
+      json.data.filter(Boolean).forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c; opt.textContent = c;
+        citySelect.appendChild(opt);
+      });
+      cityGroup.style.display = 'block';
+    }
+  } catch(e) { console.error('Cities load failed', e); }
+}
+
 // ─── SEARCH ──────────────────────────────────────────────
 async function doSearch() {
-  const city = document.getElementById('citySelect').value.trim();
-
-  const bank = document.getElementById('bankSelect').value;
+  const city    = document.getElementById('citySelect').value.trim();
+  const bank    = document.getElementById('bankSelect').value;
   const product = document.getElementById('productSelect').value;
 
-  if (!city) { showToast('Please enter a city name'); return; }
+  if (!city) { showToast('Please select a city'); return; }
 
   const section = document.getElementById('resultsSection');
   section.innerHTML = `<div class="loading"><div class="spinner"></div>Searching database...</div>`;
 
   try {
     const params = new URLSearchParams({ action: 'search', city, bank, product });
-    const res = await fetch(`${SHEET_URL}?${params}`);
-    const json = await res.json();
-
+    const res    = await fetch(`${SHEET_URL}?${params}`);
+    const json   = await res.json();
     if (json.status !== 'ok') throw new Error(json.message);
 
-    let results = json.data;
-    let isNearest = false;
-    let nearestCity = '';
+    let results    = json.data;
+    let isNearest  = false;
+    let nearestCity= '';
 
-    // If no results, search by state
     if (!results.length && city) {
-      const stateRes = await fetch(`${SHEET_URL}?action=searchByState&city=${encodeURIComponent(city)}&bank=${encodeURIComponent(bank)}&product=${encodeURIComponent(product)}`);
+      const stateRes  = await fetch(`${SHEET_URL}?action=searchByState&city=${encodeURIComponent(city)}&bank=${encodeURIComponent(bank)}&product=${encodeURIComponent(product)}`);
       const stateJson = await stateRes.json();
       if (stateJson.status === 'ok' && stateJson.data.length) {
-        results = stateJson.data;
-        isNearest = true;
+        results     = stateJson.data;
+        isNearest   = true;
         nearestCity = [...new Set(results.map(r => r.city))].slice(0,3).join(', ');
       }
     }
@@ -860,16 +660,15 @@ function renderResults(results, city, isNearest, nearestCity) {
       <div class="no-results">
         <div class="no-results-icon">🏙️</div>
         <h3>No RMs found for "${city}"</h3>
-        <p>This city may not have records yet. Try a nearby major city or add a new RM using the + button.</p>
+        <p>This city may not have records yet. Try a nearby city or add a new RM using the + button.</p>
       </div>`;
     return;
   }
 
-  // Group by bank_nbfc_name + login_code only (product shown per contact)
   const grouped = {};
   results.forEach(r => {
-    const prod = (r.product || r['product'] || '').toString().trim();
-    const key = `${r.bank_nbfc_name}|||${r.login_code}`;
+    const prod = (r.product || '').toString().trim();
+    const key  = `${r.bank_nbfc_name}|||${r.login_code}`;
     if (!grouped[key]) grouped[key] = { bank: r.bank_nbfc_name, login: r.login_code, rows: [] };
     grouped[key].rows.push({...r, _product: prod});
   });
@@ -886,9 +685,8 @@ function renderResults(results, city, isNearest, nearestCity) {
   </div>`;
 
   Object.values(grouped).forEach(group => {
-    const initial = (group.bank || '?').charAt(0).toUpperCase();
-    // Collect all unique products for this bank group
-    const groupProducts = [...new Set(group.rows.map(r => r._product).filter(Boolean))];
+    const initial      = (group.bank || '?').charAt(0).toUpperCase();
+    const groupProducts= [...new Set(group.rows.map(r => r._product).filter(Boolean))];
     html += `<div class="bank-group">
       <div class="bank-header">
         <div class="bank-avatar">${initial}</div>
@@ -901,34 +699,27 @@ function renderResults(results, city, isNearest, nearestCity) {
         </div>
       </div>`;
 
-    // Collect unique contacts per level
     const levels = [
-      { key: 'sm', nameCol: 'sales_manager', mobCol: 'sales_manager_mobile', emailCol: 'sales_manager_email', label: 'Sales Manager', dotClass: '' },
-      { key: 'asm', nameCol: 'assistant_sales_manager', mobCol: 'assistant_sales_manager_mobile', emailCol: 'assistant_sales_manager_email', label: 'Asst. Sales Manager', dotClass: 'asm' },
-      { key: 'zsm', nameCol: 'zonal_sales_manager', mobCol: 'zonal_sales_manager_mobile', emailCol: 'zonal_sales_manager_email', label: 'Zonal Sales Manager', dotClass: 'zsm' },
+      { key:'sm',  nameCol:'sales_manager',           mobCol:'sales_manager_mobile',           emailCol:'sales_manager_email',           label:'Sales Manager',       dotClass:'' },
+      { key:'asm', nameCol:'assistant_sales_manager',  mobCol:'assistant_sales_manager_mobile',  emailCol:'assistant_sales_manager_email',  label:'Asst. Sales Manager', dotClass:'asm' },
+      { key:'zsm', nameCol:'zonal_sales_manager',      mobCol:'zonal_sales_manager_mobile',      emailCol:'zonal_sales_manager_email',      label:'Zonal Sales Manager', dotClass:'zsm' },
     ];
 
     levels.forEach(level => {
       const seen = new Set();
       group.rows.forEach(row => {
-        const name = row[level.nameCol];
+        const name   = row[level.nameCol];
         const mobile = row[level.mobCol];
-        const email = row[level.emailCol];
+        const email  = row[level.emailCol];
         const rowNum = row._row;
         const status = row.status || 'active';
-        const notes = row.notes || '';
-
+        const notes  = row.notes  || '';
         if (!name || !mobile) return;
-        const dedupeKey = mobile;
-        if (seen.has(dedupeKey)) return;
-        seen.add(dedupeKey);
-
+        if (seen.has(mobile)) return;
+        seen.add(mobile);
         const statusBadge = status && status !== 'active'
-          ? `<span class="status-badge status-${status}">${status}</span> `
-          : '';
-
+          ? `<span class="status-badge status-${status}">${status}</span> ` : '';
         const waMsg = encodeURIComponent(`Hi ${name}, this is ${YOUR_NAME} from ${YOUR_COMPANY}. We handle structured loan cases across multiple cities. I got your reference through RuLoans. Would like to connect for a ${row._product || 'loan'} case discussion.`);
-
         html += `<div class="contact-card">
           <button class="edit-btn" onclick="openEditModal(${JSON.stringify({rowNum, level: level.key, name, mobile, email, status, notes, bank: group.bank, city: row.city || '', state: row.state || ''}).replace(/"/g,'&quot;')})">✏️</button>
           <div class="contact-level"><span class="level-dot ${level.dotClass}"></span>${level.label} ${row._product ? `&nbsp;<span class="badge badge-product" style="font-size:10px;padding:1px 7px;">${row._product}</span>` : ''}</div>
@@ -943,7 +734,6 @@ function renderResults(results, city, isNearest, nearestCity) {
         </div>`;
       });
     });
-
     html += `</div>`;
   });
 
@@ -955,8 +745,7 @@ function populateEditBankDropdown(currentBank) {
   sel.innerHTML = '<option value="">Select Lender</option>';
   allBanks.forEach(b => {
     const opt = document.createElement('option');
-    opt.value = b;
-    opt.textContent = b;
+    opt.value = b; opt.textContent = b;
     if (b === currentBank) opt.selected = true;
     sel.appendChild(opt);
   });
@@ -966,63 +755,44 @@ function populateEditBankDropdown(currentBank) {
 function openEditModal(contact) {
   editingContact = contact;
   document.getElementById('editModalTitle').textContent = 'Edit Contact';
-  document.getElementById('editRowNum').value = contact.rowNum;
+  document.getElementById('editRowNum').value  = contact.rowNum;
   populateEditBankDropdown(contact.bank || '');
-  document.getElementById('editLevel').value = contact.level;
-  document.getElementById('editName').value = contact.name || '';
-  document.getElementById('editMobile').value = contact.mobile || '';
-  document.getElementById('editEmail').value = contact.email || '';
-  document.getElementById('editStatus').value = contact.status || 'active';
-  document.getElementById('editNotes').value = contact.notes || '';
-  document.getElementById('editCity').value = contact.city || '';
-  document.getElementById('editState').value = contact.state || '';
+  document.getElementById('editLevel').value   = contact.level;
+  document.getElementById('editName').value    = contact.name   || '';
+  document.getElementById('editMobile').value  = contact.mobile || '';
+  document.getElementById('editEmail').value   = contact.email  || '';
+  document.getElementById('editStatus').value  = contact.status || 'active';
+  document.getElementById('editNotes').value   = contact.notes  || '';
+  document.getElementById('editCity').value    = contact.city   || '';
+  document.getElementById('editState').value   = contact.state  || '';
   openModal('editModal');
 }
 
 async function saveEdit() {
   const rowNum = parseInt(document.getElementById('editRowNum').value);
-  const bank = document.getElementById('editBank').value;
-  const level = document.getElementById('editLevel').value;
-  const name = document.getElementById('editName').value.trim();
+  const bank   = document.getElementById('editBank').value;
+  const level  = document.getElementById('editLevel').value;
+  const name   = document.getElementById('editName').value.trim();
   const mobile = document.getElementById('editMobile').value.trim();
-  const email = document.getElementById('editEmail').value.trim();
+  const email  = document.getElementById('editEmail').value.trim();
   const status = document.getElementById('editStatus').value;
-  const notes = document.getElementById('editNotes').value.trim();
-  const city = document.getElementById('editCity').value.trim();
-  const state = document.getElementById('editState').value.trim();
-
+  const notes  = document.getElementById('editNotes').value.trim();
+  const city   = document.getElementById('editCity').value.trim();
+  const state  = document.getElementById('editState').value.trim();
   if (!name || !mobile) { showToast('Name and mobile are required'); return; }
-
   const colMap = {
-    sm: { name: 'sales_manager', mobile: 'sales_manager_mobile', email: 'sales_manager_email' },
+    sm:  { name: 'sales_manager',          mobile: 'sales_manager_mobile',          email: 'sales_manager_email' },
     asm: { name: 'assistant_sales_manager', mobile: 'assistant_sales_manager_mobile', email: 'assistant_sales_manager_email' },
-    zsm: { name: 'zonal_sales_manager', mobile: 'zonal_sales_manager_mobile', email: 'zonal_sales_manager_email' },
+    zsm: { name: 'zonal_sales_manager',     mobile: 'zonal_sales_manager_mobile',     email: 'zonal_sales_manager_email' },
   };
-
   const cols = colMap[level];
-  const data = {
-    bank_nbfc_name: bank,
-    [cols.name]: name,
-    [cols.mobile]: mobile,
-    [cols.email]: email,
-    status,
-    notes,
-    city,
-    state
-  };
-
+  const data = { bank_nbfc_name: bank, [cols.name]: name, [cols.mobile]: mobile, [cols.email]: email, status, notes, city, state };
   try {
     showToast('Saving...');
-    const res = await fetch(SHEET_URL, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'updateRow', rowNum, data })
-    });
+    const res  = await fetch(SHEET_URL, { method: 'POST', body: JSON.stringify({ action: 'updateRow', rowNum, data }) });
     const json = await res.json();
-    if (json.status === 'ok') {
-      showToast('✅ Saved successfully');
-      closeModal('editModal');
-      doSearch();
-    } else { showToast('❌ Save failed: ' + json.message); }
+    if (json.status === 'ok') { showToast('✅ Saved successfully'); closeModal('editModal'); doSearch(); }
+    else { showToast('❌ Save failed: ' + json.message); }
   } catch(e) { showToast('❌ Connection error'); }
 }
 
@@ -1030,16 +800,10 @@ async function deleteContact() {
   if (!confirm('Delete this contact permanently?')) return;
   const rowNum = parseInt(document.getElementById('editRowNum').value);
   try {
-    const res = await fetch(SHEET_URL, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'deleteRow', rowNum })
-    });
+    const res  = await fetch(SHEET_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteRow', rowNum }) });
     const json = await res.json();
-    if (json.status === 'ok') {
-      showToast('🗑 Contact deleted');
-      closeModal('editModal');
-      doSearch();
-    } else { showToast('❌ Delete failed'); }
+    if (json.status === 'ok') { showToast('🗑 Contact deleted'); closeModal('editModal'); doSearch(); }
+    else { showToast('❌ Delete failed'); }
   } catch(e) { showToast('❌ Connection error'); }
 }
 
@@ -1047,45 +811,33 @@ async function deleteContact() {
 function openAddModal() { openModal('addModal'); }
 
 async function saveNewRM() {
-  const bank = document.getElementById('addBank').value.trim();
-  const product = document.getElementById('addProduct').value;
-  const state = document.getElementById('addState').value.trim();
-  const city = document.getElementById('addCity').value.trim();
+  const bank      = document.getElementById('addBank').value.trim();
+  const product   = document.getElementById('addProduct').value;
+  const state     = document.getElementById('addState').value.trim();
+  const city      = document.getElementById('addCity').value.trim();
   const loginCode = document.getElementById('addLoginCode').value.trim();
-  const smName = document.getElementById('addSmName').value.trim();
-  const smMobile = document.getElementById('addSmMobile').value.trim();
-  const smEmail = document.getElementById('addSmEmail').value.trim();
-  const zsmName = document.getElementById('addZsmName').value.trim();
+  const smName    = document.getElementById('addSmName').value.trim();
+  const smMobile  = document.getElementById('addSmMobile').value.trim();
+  const smEmail   = document.getElementById('addSmEmail').value.trim();
+  const zsmName   = document.getElementById('addZsmName').value.trim();
   const zsmMobile = document.getElementById('addZsmMobile').value.trim();
-  const zsmEmail = document.getElementById('addZsmEmail').value.trim();
-
-  if (!bank || !city || !smName || !smMobile) {
-    showToast('Lender, city, SM name and mobile are required');
-    return;
-  }
-
+  const zsmEmail  = document.getElementById('addZsmEmail').value.trim();
+  if (!bank || !city || !smName || !smMobile) { showToast('Lender, city, SM name and mobile are required'); return; }
   const data = {
-    bank_nbfc_name: bank, product, state, city,
-    login_code: loginCode,
+    bank_nbfc_name: bank, product, state, city, login_code: loginCode,
     sales_manager: smName, sales_manager_mobile: smMobile, sales_manager_email: smEmail,
     zonal_sales_manager: zsmName, zonal_sales_manager_mobile: zsmMobile, zonal_sales_manager_email: zsmEmail,
     status: 'active'
   };
-
   try {
     showToast('Adding...');
-    const res = await fetch(SHEET_URL, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'addRow', data })
-    });
+    const res  = await fetch(SHEET_URL, { method: 'POST', body: JSON.stringify({ action: 'addRow', data }) });
     const json = await res.json();
     if (json.status === 'ok') {
       showToast('✅ New RM added to database');
       closeModal('addModal');
-      // Clear form
       ['addBank','addState','addCity','addLoginCode','addSmName','addSmMobile','addSmEmail','addZsmName','addZsmMobile','addZsmEmail'].forEach(id => document.getElementById(id).value = '');
-      // Reload cities and banks
-      await Promise.all([loadCities(), loadBanks()]);
+      await Promise.all([loadStates(), loadBanks()]);
     } else { showToast('❌ Failed: ' + json.message); }
   } catch(e) { showToast('❌ Connection error'); }
 }
@@ -1105,7 +857,6 @@ function closeModal(id) {
   document.body.style.overflow = '';
 }
 
-// Close modal on overlay click
 document.querySelectorAll('.modal-overlay').forEach(overlay => {
   overlay.addEventListener('click', e => {
     if (e.target === overlay) closeModal(overlay.id);
@@ -1121,8 +872,6 @@ function showToast(msg) {
   toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-
-// Init on load
 init();
 </script>
 </body>
