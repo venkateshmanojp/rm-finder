@@ -346,7 +346,7 @@
   </div>
 
   <!-- City Dropdown — hidden until state selected -->
-  <div class="field-group" id="cityFieldGroup" style="display:none;">
+  <div class="field-group" id="cityFieldGroup">
     <div class="field-label">City / Town</div>
     <select class="search-select" id="citySelect">
       <option value="">Select City...</option>
@@ -618,13 +618,19 @@ async function doSearch() {
   const bank    = document.getElementById('bankSelect').value;
   const product = document.getElementById('productSelect').value;
 
-  if (!city) { showToast('Please select a city'); return; }
+  if (!city && !document.getElementById('stateSelect').value) { 
+  showToast('Please select at least State or City'); 
+  return; 
+}
+
 
   const section = document.getElementById('resultsSection');
   section.innerHTML = `<div class="loading"><div class="spinner"></div>Searching database...</div>`;
 
   try {
-    const params = new URLSearchParams({ action: 'search', city, bank, product });
+    const state = document.getElementById('stateSelect').value;
+const params = new URLSearchParams({ action: 'search', city, bank, product, state });
+
     const res    = await fetch(`${SHEET_URL}?${params}`);
     const json   = await res.json();
     if (json.status !== 'ok') throw new Error(json.message);
